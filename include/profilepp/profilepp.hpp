@@ -16,7 +16,11 @@
 	#define PROFILE(name)
 #endif
 
-#define PROFILE_FN() PROFILE(__PRETTY_FUNCTION__)
+#if defined(_WIN32) || defined(WIN32)
+	#define PROFILE_FN() PROFILE(__FUNCSIG__)
+#else
+	#define PROFILE_FN() PROFILE(__PRETTY_FUNCTION__)
+#endif
 
 class ProfileResult
 {

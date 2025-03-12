@@ -1,12 +1,15 @@
-CXXFLAGS := -std=c++20 -Iinclude --save-temps
+CXXFLAGS := -std=c++20 -Iinclude
 LDFLAGS := -lc -lm -lstdc++
 
 all: profilepp
 
-profilepp: example 
+profilepp: profilepp.o
+	g++ ${LDFLAGS} -o $@ $^
 
-example: example.o
-	g++ ${LDFLAGS} $^ $@
+profilepp.o:examples/profilepp.cpp	
+	g++ -c ${CXXFLAGS} -o $@ $^
 
-example.o:examples/example.cpp	
-	g++ -c ${CXXFLAGS} $^ $@
+clean:
+	rm *.o
+	rm profilepp
+	rm profile.json
